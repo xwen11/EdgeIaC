@@ -1,8 +1,8 @@
 terraform {
   backend "azurerm" {
-    resource_group_name  = "<ResourceGroupName>"
-    storage_account_name = "<StorageAccountName>"
-    container_name       = "<StorageContainerName>"
+    resource_group_name  = "wen-IaC"
+    storage_account_name = "weniacstorage"
+    container_name       = "weniaccontainer"
     key                  = "{{.GroupName}}.tfstate"
   }
 }
