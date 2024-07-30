@@ -4,6 +4,7 @@ resource "azurerm_key_vault" "DeploymentKeyVault" {
   name                = var.randomSuffix ? "${var.keyvaultName}-${random_integer.random_suffix.result}" : var.keyvaultName
   location            = var.resourceGroup.location
   resource_group_name = var.resourceGroup.name
+  tags                = {}
 
   enabled_for_deployment          = true
   enabled_for_template_deployment = true
@@ -20,7 +21,7 @@ resource "azurerm_key_vault" "DeploymentKeyVault" {
 resource "azurerm_key_vault_secret" "AzureStackLCMUserCredential" {
   name         = "AzureStackLCMUserCredential"
   content_type = "Secret"
-  value        = base64encode("${var.domainAdminUser}:${var.domainAdminPassword}")
+  value        = base64encode("${var.deploymentUser}:${var.deploymentUserPassword}")
   key_vault_id = azurerm_key_vault.DeploymentKeyVault.id
   depends_on   = [azurerm_key_vault.DeploymentKeyVault]
   tags         = {}
